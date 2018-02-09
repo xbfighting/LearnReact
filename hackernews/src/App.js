@@ -106,17 +106,10 @@ const Table = ({list, pattern, onDismiss}) => {
   );
 }
 
-const Button = ({
-  onClick,
-  className = '',
-  children
-}) => {
-  // do st
-  return (
-    <button className={className} onClick={onClick} type="button">
-      {children}
-    </button>
-  );
-}
+const Button = ({onClick,className = '',children}) => (
+  <button className={className} onClick={onClick} type="button">
+    {children}
+  </button>
+);
 
 export default App;
