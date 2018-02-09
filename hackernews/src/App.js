@@ -19,18 +19,27 @@ const list = [
   }
 ];
 
+const isSearched = searchTerm => item => item
+  .title
+  .toLowerCase()
+  .includes(searchTerm.toLowerCase());
+
 class App extends Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-      list
+      list,
+      searchTerm: ''
     };
 
     // React 的官方文档中坚持在构造函数中绑定类方法
     this.onDismiss = this
       .onDismiss
+      .bind(this);
+    this.onSearchChange = this
+      .onSearchChange
       .bind(this);
   }
 
@@ -46,13 +55,20 @@ class App extends Component {
     this.setState({list: updateList});
   }
 
+  onSearchChange(event) {
+    this.setState({searchTerm: event.target.value});
+
+    // 这里输出的是上一次的值？？
+    console.log(this.state.searchTerm);
+  }
+
   render() {
-    const helloWorld = "Welcome to the Road to learn React";
     return (
       <div className="App">
         {this
           .state
           .list
+          .filter(isSearched(this.state.searchTerm))
           .map(item => {
             return (
               <div key={item.objectID}>
@@ -74,6 +90,9 @@ class App extends Component {
             );
           })
 }
+        <form>
+          <input type="text" onChange={this.onSearchChange}/>
+        </form>
       </div>
     );
   }
